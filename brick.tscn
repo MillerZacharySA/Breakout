@@ -1,0 +1,63 @@
+[gd_scene load_steps=11 format=3 uid="uid://dhlaqhkmaipe7"]
+
+[ext_resource type="Texture2D" uid="uid://cu3hwws5gqv7h" path="res://icon.svg" id="1_3qopw"]
+[ext_resource type="Script" path="res://brick.gd" id="1_pocjg"]
+[ext_resource type="Script" path="res://bottom.gd" id="3_n3od7"]
+[ext_resource type="Script" path="res://top.gd" id="4_2yabt"]
+[ext_resource type="Script" path="res://left.gd" id="5_x5nps"]
+[ext_resource type="Script" path="res://right.gd" id="6_4inel"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_03v8r"]
+a = Vector2(-74, 0)
+b = Vector2(74, 0)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_u6frh"]
+a = Vector2(-73, -17)
+b = Vector2(73, -17)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_g0sl3"]
+a = Vector2(-77, -15)
+b = Vector2(-77, 15)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_m3ghc"]
+a = Vector2(-1, -25)
+b = Vector2(-1, 5)
+
+[node name="Brick" type="Node2D" groups=["bricks"]]
+script = ExtResource("1_pocjg")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.1875, 0.296875)
+texture = ExtResource("1_3qopw")
+
+[node name="Bottom" type="Area2D" parent="." groups=["bricks"]]
+script = ExtResource("3_n3od7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bottom"]
+position = Vector2(0, 17)
+shape = SubResource("SegmentShape2D_03v8r")
+
+[node name="Top" type="Area2D" parent="." groups=["bricks"]]
+script = ExtResource("4_2yabt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Top"]
+shape = SubResource("SegmentShape2D_u6frh")
+
+[node name="Left" type="Area2D" parent="." groups=["bricks"]]
+script = ExtResource("5_x5nps")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Left"]
+position = Vector2(4, 0)
+shape = SubResource("SegmentShape2D_g0sl3")
+
+[node name="Right" type="Area2D" parent="." groups=["bricks"]]
+script = ExtResource("6_4inel")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Right"]
+position = Vector2(74, 10)
+shape = SubResource("SegmentShape2D_m3ghc")
+
+[connection signal="area_entered" from="Bottom" to="Bottom" method="_on_area_entered"]
+[connection signal="area_entered" from="Top" to="Top" method="_on_area_entered"]
+[connection signal="area_entered" from="Left" to="Left" method="_on_area_entered"]
+[connection signal="area_entered" from="Right" to="Right" method="_on_area_entered"]
